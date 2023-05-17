@@ -16,9 +16,7 @@ public static class Installer
             .Where(t => t.IsSubclassOf(typeof(JobBase)));
 
         foreach (var type in types)
-        {
             services.AddTransient(type);
-        }
 
         return services;
     }
