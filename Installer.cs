@@ -31,8 +31,7 @@ public static class Installer
         foreach (var type in types)
         {
             var job = app.Services.GetService(type) as JobBase;
-            if (job is null) continue;
-            RecurringJob.AddOrUpdate(job.JobName, () => job.Execute(), job.CronExpression);
+            RecurringJob.AddOrUpdate(job!.JobName, () => job.Execute(), job.CronExpression);
         }
     }
 }
