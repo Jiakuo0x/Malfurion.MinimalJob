@@ -21,5 +21,20 @@ public abstract class JobBase
 
     public abstract string JobName { get; }
     public abstract string CronExpression { get; }
-    public abstract Task Execute();
+    public async Task Execute()
+    {
+        Logger.Information($"[{JobName} Job] Start");
+        try
+        {
+            await DoWork();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex.Message);
+            throw ex;
+        }
+        Logger.Information($"[{JobName} Job] End");
+    }
+
+    public abstract Task DoWork();
 }

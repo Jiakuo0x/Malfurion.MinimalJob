@@ -10,14 +10,12 @@ public class DemoJob : JobBase
     {
         _db = db;
     }
-    public override async Task Execute()
+    public override async Task DoWork()
     {
         await Task.Run(() =>
         {
-            Logger.Information("test add start");
             _db.Set<DemoModel>().Add(new DemoModel { Name = $"minimal job {Guid.NewGuid().ToString()}" });
             _db.SaveChanges();
-            Logger.Information("test add end");
         });
     }
 }

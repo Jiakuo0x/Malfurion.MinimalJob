@@ -14,7 +14,10 @@ builder.Services.AddHangfireServer();
 builder.Services.AddJobs();
 
 var app = builder.Build();
-app.UseHangfireDashboard();
+app.UseHangfireDashboard("/jobs", new DashboardOptions
+{
+    DashboardTitle = "Jobs Dashboard",
+});
 app.UseSerilog();
 app.UseJobs();
 
