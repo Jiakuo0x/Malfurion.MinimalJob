@@ -11,14 +11,15 @@ builder.Services.AddHangfire(configuration => configuration
     .UseSerilogLogProvider()
     .UseInMemoryStorage());
 builder.Services.AddHangfireServer();
-builder.Services.AddJobs();
+builder.Services.AddJobServices();
 
 var app = builder.Build();
 app.UseHangfireDashboard("/jobs", new DashboardOptions
 {
     DashboardTitle = "Jobs Dashboard",
 });
-app.UseSerilog();
-app.UseJobs();
+
+Installer.InitSerilog();
+app.ScheduleJobs();
 
 app.Run();

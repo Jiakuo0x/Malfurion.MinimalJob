@@ -2,14 +2,14 @@ using System.Reflection;
 
 public static class Installer
 {
-    public static void UseSerilog(this WebApplication app)
+    public static void InitSerilog()
     {
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.File($"logs\\{DateTime.Now.Year}\\{DateTime.Now.Month}\\log.txt", rollingInterval: RollingInterval.Day)
             .CreateLogger();
     }
-    public static IServiceCollection AddJobs(this IServiceCollection services)
+    public static IServiceCollection AddJobServices(this IServiceCollection services)
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         var types = assembly.GetTypes()
@@ -20,7 +20,7 @@ public static class Installer
 
         return services;
     }
-    public static void UseJobs(this WebApplication app)
+    public static void ScheduleJobs(this WebApplication app)
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         var types = assembly.GetTypes()
